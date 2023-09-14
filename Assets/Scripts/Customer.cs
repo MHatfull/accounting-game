@@ -11,6 +11,7 @@ public class Customer : MonoBehaviour
 
     private float _startTime;
     private bool _hasPurchased = false;
+    private bool _angry = false;
 
     public void Start()
     {
@@ -32,9 +33,21 @@ public class Customer : MonoBehaviour
         {
             if (_hasPurchased)
             {
-                WalkTo(transform.position + 5 * Vector3.right);
+                int multiplier = _angry ? -5 : 5;
+                WalkTo(transform.position + multiplier * Vector3.right);
             } else
             {
+                if (Supplies.Instance.Lemons > 0)
+                {
+                    Supplies.Instance.Money += 25;
+                    Supplies.Instance.MoneyIncrease += 25;
+                    Supplies.Instance.Lemons -= 1;
+                    Supplies.Instance.LemonDecrease += 1;
+                } else
+                {
+                    _angry = true;
+                }
+
                 WalkTo(transform.position);
                 _hasPurchased = true;
             }

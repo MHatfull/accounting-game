@@ -9,7 +9,7 @@ public class InventoryInterface : MonoBehaviour
     [SerializeField] TextMeshProUGUI _lemons;
     [SerializeField] Supplies _supplies;
     [SerializeField] TMP_InputField _purchaseAmount;
-    [SerializeField] private int _cost = 10;
+    [SerializeField] private GameManager _gameManager;
 
     private void OnEnable()
     {
@@ -26,7 +26,9 @@ public class InventoryInterface : MonoBehaviour
     {
         int quantity = int.Parse(_purchaseAmount.text);
         _supplies.Lemons += quantity;
-        _supplies.Money -= quantity * _cost;
+        _supplies.Money -= quantity * _gameManager.LemonCost;
+        _supplies.MoneyDecrease += quantity * _gameManager.LemonCost;
+        _supplies.LemonIncrease += quantity;
         DisplayCurrentSupplies();
     }
 }
