@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BusinessDayManager : MonoBehaviour
@@ -12,7 +13,10 @@ public class BusinessDayManager : MonoBehaviour
     public void StartBusinessDay()
     {
         StartCoroutine(StartTimer());
-        SpawnCustomer();
+        for(int i = 0; i < 5; i++)
+        {
+            StartCoroutine(SpawnCustomerDelayed(Random.Range(0f, _dayDuration)));
+        }
     }
 
     private void SpawnCustomer()
@@ -25,5 +29,11 @@ public class BusinessDayManager : MonoBehaviour
     {
         yield return new WaitForSeconds(_dayDuration);
         _gameManager.CloseBusiness();
+    }
+
+    public IEnumerator SpawnCustomerDelayed(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SpawnCustomer();
     }
 }

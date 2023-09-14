@@ -12,6 +12,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _summaryInterface;
     [SerializeField] private BusinessDayManager _businessDayManager;
 
+    private void Start()
+    {
+        StartNextDay();
+    }
+
     public void OpenBusiness()
     {
         CurrentPartOfDay = DayPhase.BusinessTime;
