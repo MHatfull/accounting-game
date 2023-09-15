@@ -13,7 +13,7 @@ public class BusinessDayManager : MonoBehaviour
     public void StartBusinessDay()
     {
         StartCoroutine(StartTimer());
-        for(int i = 0; i < 5; i++)
+        for(int i = 0; i < Random.Range(4, 9); i++)
         {
             StartCoroutine(SpawnCustomerDelayed(Random.Range(0f, _dayDuration - 1.5f)));
         }
