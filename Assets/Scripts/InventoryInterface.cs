@@ -10,10 +10,12 @@ public class InventoryInterface : MonoBehaviour
     [SerializeField] Supplies _supplies;
     [SerializeField] TMP_InputField _purchaseAmount;
     [SerializeField] private GameManager _gameManager;
+    [SerializeField] TextMeshProUGUI _validationMessage;
 
     private void OnEnable()
     {
         DisplayCurrentSupplies();
+        _validationMessage.text = "";
     }
 
     private void DisplayCurrentSupplies()
@@ -25,9 +27,21 @@ public class InventoryInterface : MonoBehaviour
     public void PurchaseStock()
     {
         int quantity = int.Parse(_purchaseAmount.text);
+        if (quantity < 0)
+        {
+            _validationMessage.text = "You can't buy negative lemons!";
+            return;
+        }
+        int cost = quantity * _gameManager.LemonCost;
+        if (cost > _supplies.Money)
+        {
+            _validationMessage.text = "You can't afford that!";
+            return;
+        }
+        _validationMessage.text = "";
         _supplies.Lemons += quantity;
-        _supplies.Money -= quantity * _gameManager.LemonCost;
-        _supplies.MoneyDecrease += quantity * _gameManager.LemonCost;
+        _supplies.Money -= cost;
+        _supplies.MoneyDecrease += cost;
         _supplies.LemonIncrease += quantity;
         DisplayCurrentSupplies();
     }
