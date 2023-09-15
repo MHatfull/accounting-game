@@ -12,6 +12,7 @@ public class Customer : MonoBehaviour
     [SerializeField] private GameObject _happyFace;
     [SerializeField] private GameObject _sadFace;
     [SerializeField] private AudioSource _tillSound;
+    [SerializeField] private AudioSource _frustratedSound;
 
     private float _startTime;
     private bool _hasPurchased = false;
@@ -55,6 +56,8 @@ public class Customer : MonoBehaviour
                 {
                     _sadFace.SetActive(true);
                     _neutralFace.SetActive(false);
+                    _frustratedSound.pitch *= Random.Range(0.9f, 1.1f);
+                    _frustratedSound.Play();
                     _angry = true;
                 }
 
